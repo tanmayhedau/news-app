@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import { auth, googleProvider } from "../config/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate()
 
   console.log(auth?.currentUser?.email);
 
   const signIn = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      
+      navigate('/news');
+      
     } catch (error) {
       console.log(error);
     }
@@ -19,13 +24,15 @@ const Auth = () => {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+    
+      navigate('/news');
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div>
+    <div className="inputs">
       <input
         placeholder="Enter your mail address"
         type="email"
@@ -42,4 +49,4 @@ const Auth = () => {
   );
 };
 
-export default Auth;
+export {  Auth };

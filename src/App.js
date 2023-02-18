@@ -1,11 +1,22 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import "./App.css";
-import Auth from "./components/Auth";
+import { Auth } from "./components/Auth";
+import News from "./components/News";
+import Navbar from "./components/Navbar";
+
 
 function App() {
   return (
-    <div className="App">
-      <Auth />
-    </div>
+    <Router>
+      <Navbar/>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Auth />} />
+          <Route path="/news" element={<News />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
