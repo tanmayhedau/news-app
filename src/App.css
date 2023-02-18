@@ -1,29 +1,3 @@
-/* .App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 1rem;
-}
-
-.inputs {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-}
-.inputs input {
-  width: 40vw;
-  height: 10vh;
-  margin-left: 21rem;
-  margin-top: 15px;
-}
-
-button {
-  width: 30vw;
-  height: 10vh;
-  margin-left: 25.3rem;
-  margin-top: 15px;
-} */
-
 /* For mobile devices */
 @media only screen and (max-width: 600px) {
   .App {
@@ -75,7 +49,7 @@ button {
   button {
     width: 30vw;
     height: 10vh;
-    margin-left: 25.3rem;
+    margin-left: 25rem;
     margin-top: 15px;
     background-color: #1a1a1a;
     color: #ffffff;

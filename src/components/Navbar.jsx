@@ -1,14 +1,28 @@
 import React from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../config/firebase";
+import { useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar({ onLogout }) {
+  const navigate = useNavigate();
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+      onLogout();
+      localStorage.clear()
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container-fluid">
+        <a className="navbar-brand" href="#">
           News
         </a>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
@@ -16,24 +30,18 @@ export default function Navbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="#">
-                Home
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " aria-current="page" href="/auth">
-                Login
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " aria-current="page">
-                Logout
-              </a>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <button
+                onClick={logOut}
+                className="btn btn-sm btn-outline-secondary"
+                type="submit"
+              >
+                Log Out
+              </button>
             </li>
           </ul>
         </div>

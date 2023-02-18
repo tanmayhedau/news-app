@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { auth, googleProvider } from "../config/firebase";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-const Auth = () => {
+const Auth = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  console.log(auth?.currentUser?.email);
+  // console.log(auth?.currentUser?.email);
 
   const signIn = async () => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      
-      navigate('/news');
-      
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+      onLogin();
+      navigate("/news");
+      localStorage.setItem("tanmay", res);
     } catch (error) {
       console.log(error);
     }
@@ -23,30 +23,55 @@ const Auth = () => {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-    
-      navigate('/news');
+      const res = await signInWithPopup(auth, googleProvider);
+      // console.log(auth?.currentUser);
+      console.log(res);
+      onLogin();
+      navigate("/news");
+      localStorage.setItem("tanmay", res);
     } catch (error) {
       console.log(error);
     }
   };
 
+  // useEffect(() => {
+  //   localStorage.getItem("tanmay")
+  
+   
+  // }, [])
+  
+
   return (
     <div className="inputs">
-      <input
-        placeholder="Enter your mail address"
-        type="email"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        placeholder="Enter your password"
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={signIn}>Sign In</button>
-      <button onClick={signInWithGoogle}>Sign In With Google</button>
+      {/* bootstrap */}
+
+      <div className="mb-3">
+        <input
+          type="email"
+          className="form-control"
+          id="exampleFormControlInput1"
+          placeholder="name@example.com"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div className="mb-3">
+        <input
+          type="password"
+          className="form-control"
+          id="inputPassword"
+          placeholder="password must be min. 6 characters"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+
+      <button onClick={signIn} type="button" className="btn btn-dark">
+        Sign In
+      </button>
+      <button onClick={signInWithGoogle} type="button" className="btn btn-dark">
+        Sign In With Google
+      </button>
     </div>
   );
 };
 
-export {  Auth };
+export default Auth;
